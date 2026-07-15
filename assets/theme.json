@@ -1,0 +1,24 @@
+{
+  "schemaVersion": 1,
+  "id": "open-portal",
+  "name": "Open Portal",
+  "brandSubtitle": "CODEX SKINKIT",
+  "tagline": "Turn ideas into working software.",
+  "projectPrefix": "Project / ",
+  "projectLabel": "Select project",
+  "statusText": "PORTAL ONLINE",
+  "quote": "MAKE SOMETHING WONDERFUL",
+  "image": "open-portal.png",
+  "colors": {
+    "background": "#071116",
+    "panel": "#0b1a20",
+    "panelAlt": "#10272c",
+    "accent": "#7cff46",
+    "accentAlt": "#b8ff3d",
+    "secondary": "#36d7e8",
+    "highlight": "#642a8c",
+    "text": "#e9fff1",
+    "muted": "#9ebdb3",
+    "line": "rgba(124, 255, 70, .28)"
+  }
+}

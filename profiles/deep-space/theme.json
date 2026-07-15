@@ -1,0 +1,24 @@
+{
+  "schemaVersion": 1,
+  "id": "deep-space-mission-control",
+  "name": "Deep Space Mission Control",
+  "brandSubtitle": "ORBITAL SOFTWARE OPERATIONS",
+  "tagline": "Observe the signal, plan the orbit, ship the mission.",
+  "projectPrefix": "Mission / ",
+  "projectLabel": "Select mission",
+  "statusText": "TELEMETRY ONLINE",
+  "quote": "THE SKY IS NOT THE LIMIT",
+  "image": "earth-airglow.jpg",
+  "colors": {
+    "background": "#071116",
+    "panel": "#0a1820",
+    "panelAlt": "#102631",
+    "accent": "#74f3c1",
+    "accentAlt": "#d6f06f",
+    "secondary": "#62c8ff",
+    "highlight": "#ffb86b",
+    "text": "#f1fbff",
+    "muted": "#9eb8c4",
+    "line": "rgba(98, 200, 255, .30)"
+  }
+}

@@ -1,0 +1,22 @@
+.DS_Store
+._*
+release/
+runtime/
+*.log
+*.tmp
+Codex SkinKit Verification.png
+
+# Private delivery and macOS source files are not part of this Windows repository.
+CHANGELOG.md
+CLIENT_DEPLOY_PROMPT*.md
+README-WINDOWS.md
+SKILL.md
+*.command
+agents/
+docs/
+references/
+assets/portal-hero.png
+scripts/*-macos.sh
+scripts/common-macos.sh
+scripts/build-release.sh
+tests/run-tests.sh

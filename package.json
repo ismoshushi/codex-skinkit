@@ -1,0 +1,13 @@
+{
+  "name": "codex-skinkit",
+  "version": "1.0.0",
+  "private": false,
+  "type": "module",
+  "scripts": {
+    "test": "powershell -NoProfile -ExecutionPolicy Bypass -File ./tests/run-tests-windows.ps1",
+    "doctor": "powershell -NoProfile -ExecutionPolicy Bypass -File ./scripts/doctor-windows.ps1"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}
