@@ -8,7 +8,7 @@ It adds a customizable home banner and task background while keeping the native 
 <img width="1914" height="1014" alt="5870218c0d084c44a8da85d9c23836c5" src="https://github.com/user-attachments/assets/1d394820-2e46-4664-8d11-c563b9929c0b" />
 
 
-<img width="1920" height="1020" alt="image" src="https://github.com/user-attachments/assets/fcb6e88b-fa70-4a0f-843c-23c1eaaedbe6" />
+<img width="1920" height="1020" alt="image" src="https://github.com/user-attachments/assets/71dad258-4ec5-4803-81de-b5a79d349db3" />
 
 
 ## Install
