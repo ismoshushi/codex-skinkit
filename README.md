@@ -4,6 +4,10 @@ An unofficial theme layer for the Microsoft Store version of Codex on Windows 10
 
 It adds a customizable home banner and task background while keeping the native sidebar, cards, project selector, task content, menus, and composer interactive. The official MSIX package and `app.asar` are never modified.
 
+
+<img width="1914" height="1014" alt="5870218c0d084c44a8da85d9c23836c5" src="https://github.com/user-attachments/assets/1d394820-2e46-4664-8d11-c563b9929c0b" />
+
+
 ## Install
 
 1. Install and open the official Codex app once.
