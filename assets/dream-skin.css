@@ -393,6 +393,113 @@ html.codex-dream-skin .dream-skin-home {
 .dream-skin-home .group\/home-suggestions button > span:first-child { justify-content: center !important; }
 .dream-skin-home .group\/home-suggestions button > span:last-child { align-items: center !important; text-align: center !important; }
 
+/* World Cup Night keeps the native actions but presents them as matchday cards. */
+html[data-dream-skin-theme="world-cup-night"] .dream-skin-home > div:first-child > div:first-child > div:first-child {
+  background-position: center, right 10% !important;
+  border-color: rgba(216, 185, 91, .72) !important;
+  box-shadow: 0 16px 38px rgba(0, 0, 0, .42), 0 0 24px rgba(80, 214, 209, .12), inset 0 0 0 3px rgba(216, 185, 91, .07) !important;
+}
+
+html[data-dream-skin-theme="world-cup-night"] .dream-skin-home .group\/home-suggestions button {
+  overflow: hidden;
+  border-color: rgba(216, 185, 91, .34) !important;
+  background:
+    radial-gradient(circle at 50% 10%, rgba(80, 214, 209, .14), transparent 36%),
+    linear-gradient(145deg, rgba(7, 45, 35, .98), rgba(5, 24, 28, .98)) !important;
+  box-shadow: 0 9px 22px rgba(0, 0, 0, .30), inset 0 -3px rgba(216, 185, 91, .08) !important;
+}
+
+html[data-dream-skin-theme="world-cup-night"] .dream-skin-home .group\/home-suggestions button::after {
+  content: "";
+  position: absolute;
+  inset: 9px;
+  pointer-events: none;
+  opacity: .18;
+  border: 1px solid var(--ds-cyan);
+  border-radius: 13px;
+  background:
+    linear-gradient(90deg, transparent 49.6%, var(--ds-cyan) 49.6% 50.4%, transparent 50.4%),
+    radial-gradient(circle at 50% 50%, transparent 0 15px, var(--ds-cyan) 16px 17px, transparent 18px);
+}
+
+html[data-dream-skin-theme="world-cup-night"] .dream-skin-home .group\/home-suggestions button > span {
+  position: relative;
+  z-index: 1;
+}
+
+html[data-dream-skin-theme="world-cup-night"] .dream-skin-home .group\/home-suggestions button > span:first-child > span:first-child {
+  color: #061914 !important;
+  background: linear-gradient(145deg, var(--ds-lime), #f5df8a) !important;
+  box-shadow: 0 0 0 7px rgba(216, 185, 91, .10), 0 5px 14px rgba(0, 0, 0, .32);
+}
+
+html[data-dream-skin-theme="world-cup-night"] .dream-skin-home .group\/home-suggestions button svg { display: none !important; }
+html[data-dream-skin-theme="world-cup-night"] .dream-skin-home button[data-dream-skin-matchday-icon]::before {
+  position: absolute;
+  z-index: 3;
+  left: 50%;
+  top: 16px;
+  width: 46px;
+  height: 46px;
+  display: grid;
+  place-items: center;
+  transform: translateX(-50%);
+  border: 1px solid rgba(255, 255, 255, .42);
+  border-radius: 50%;
+  background: linear-gradient(145deg, #f6dc78, #d6ad3c);
+  box-shadow: 0 0 0 8px rgba(117, 201, 241, .11), 0 6px 16px rgba(0, 0, 0, .34);
+  font: 24px/1 "Segoe UI Emoji", "Apple Color Emoji", sans-serif;
+}
+html[data-dream-skin-theme="world-cup-night"] .dream-skin-home button[data-dream-skin-matchday-icon="ball"]::before { content: "⚽"; }
+html[data-dream-skin-theme="world-cup-night"] .dream-skin-home button[data-dream-skin-matchday-icon="stadium"]::before { content: "🏟️"; }
+html[data-dream-skin-theme="world-cup-night"] .dream-skin-home button[data-dream-skin-matchday-icon="trophy"]::before { content: "🏆"; }
+html[data-dream-skin-theme="world-cup-night"] .dream-skin-home button[data-dream-skin-matchday-icon="goal"]::before { content: "🥅"; }
+
+html[data-dream-skin-theme="world-cup-night"] body {
+  background:
+    radial-gradient(circle at 82% 3%, rgba(214, 173, 60, .20), transparent 25%),
+    radial-gradient(circle at 16% 8%, rgba(117, 201, 241, .18), transparent 31%),
+    linear-gradient(145deg, #030712 0%, #071426 55%, #0b1d31 100%) !important;
+}
+
+html[data-dream-skin-theme="world-cup-night"] aside.app-shell-left-panel {
+  background: linear-gradient(180deg, rgba(4, 14, 29, .99), rgba(7, 27, 47, .97)) !important;
+  border-color: rgba(117, 201, 241, .24) !important;
+  box-shadow: 12px 0 34px rgba(0, 0, 0, .34), inset -1px 0 rgba(242, 207, 99, .10) !important;
+}
+
+html[data-dream-skin-theme="world-cup-night"] aside.app-shell-left-panel button:hover,
+html[data-dream-skin-theme="world-cup-night"] aside.app-shell-left-panel [aria-current="page"] {
+  background: linear-gradient(90deg, rgba(117, 201, 241, .20), rgba(242, 207, 99, .10)) !important;
+  border-color: rgba(117, 201, 241, .30) !important;
+}
+
+html[data-dream-skin-theme="world-cup-night"] main.main-surface {
+  background:
+    radial-gradient(circle at 88% 6%, rgba(214, 173, 60, .14), transparent 28%),
+    radial-gradient(circle at 18% 0%, rgba(117, 201, 241, .12), transparent 30%),
+    linear-gradient(180deg, #091528 0%, #050b18 100%) !important;
+  border-color: rgba(117, 201, 241, .22) !important;
+}
+
+html[data-dream-skin-theme="world-cup-night"] main.main-surface > header.app-header-tint {
+  background: linear-gradient(90deg, rgba(5, 16, 32, .99), rgba(10, 38, 63, .96), rgba(66, 49, 18, .92)) !important;
+  border-bottom-color: rgba(242, 207, 99, .24) !important;
+}
+
+html[data-dream-skin-theme="world-cup-night"] .composer-surface-chrome {
+  border-color: rgba(117, 201, 241, .34) !important;
+  background:
+    radial-gradient(circle at 88% 20%, rgba(214, 173, 60, .13), transparent 27%),
+    linear-gradient(145deg, rgba(8, 27, 47, .94), rgba(5, 14, 29, .92)) !important;
+  box-shadow: 0 11px 28px rgba(0, 0, 0, .38), inset 0 0 0 3px rgba(117, 201, 241, .05) !important;
+}
+
+html[data-dream-skin-theme="world-cup-night"] .dream-skin-home div:has(> .horizontal-scroll-fade-mask .group\/project-selector) {
+  border-color: rgba(117, 201, 241, .22);
+  background: linear-gradient(180deg, rgba(8, 29, 49, .98), rgba(5, 17, 32, .94)) !important;
+}
+
 html.codex-dream-skin .composer-surface-chrome {
   border: 1px solid rgba(124, 255, 70, .32) !important;
   border-radius: 23px !important;

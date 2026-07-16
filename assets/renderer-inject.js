@@ -64,6 +64,7 @@
     const root = document.documentElement;
     if (!root) return;
     root.classList.add("codex-dream-skin");
+    root.dataset.dreamSkinTheme = THEME.id || "custom";
     root.style.setProperty("--dream-skin-art", `url("${artUrl}")`);
     applyTheme(root);
 
@@ -88,6 +89,16 @@
       if (candidate !== home) candidate.classList.remove("dream-skin-home");
     }
     if (home) home.classList.add("dream-skin-home");
+    document.querySelectorAll("[data-dream-skin-matchday-icon]").forEach((button) => {
+      delete button.dataset.dreamSkinMatchdayIcon;
+    });
+    if (home && THEME.id === "world-cup-night") {
+      const matchdayIcons = ["ball", "stadium", "trophy", "goal"];
+      const suggestionButtons = [...home.querySelectorAll('[class~="group/home-suggestions"] button')].slice(0, matchdayIcons.length);
+      suggestionButtons.forEach((button, index) => {
+        button.dataset.dreamSkinMatchdayIcon = matchdayIcons[index];
+      });
+    }
 
     if (!shellMain || !document.body) return;
     shellMain.classList.toggle("dream-skin-home-shell", Boolean(home));
@@ -123,6 +134,7 @@
   const cleanup = () => {
     window[DISABLED_KEY] = true;
     document.documentElement?.classList.remove("codex-dream-skin");
+    if (document.documentElement) delete document.documentElement.dataset.dreamSkinTheme;
     document.documentElement?.style.removeProperty("--dream-skin-art");
     for (const name of THEME_VARIABLES) document.documentElement?.style.removeProperty(name);
     document.querySelectorAll(".dream-skin-home").forEach((node) => node.classList.remove("dream-skin-home"));

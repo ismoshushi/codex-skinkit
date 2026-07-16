@@ -1,65 +1,146 @@
-# Codex SkinKit for Windows
+<div align="center">
 
-An unofficial theme layer for the Microsoft Store version of Codex on Windows 10/11.
+# Codex SkinKit
 
-It adds a customizable home banner and task background while keeping the native sidebar, cards, project selector, task content, menus, and composer interactive. The official MSIX package and `app.asar` are never modified.
+为 Windows 版 Codex 打造的非官方主题工具包：一键安装、切换和自定义背景，同时保留原生界面的完整交互能力。
 
+[English](./README_EN.md) · [快速开始](#快速开始) · [主题预览](#内置主题) · [安全说明](#安全说明) · [赞助与联系](#赞助与联系)
 
-<img width="1914" height="1014" alt="5870218c0d084c44a8da85d9c23836c5" src="https://github.com/user-attachments/assets/1d394820-2e46-4664-8d11-c563b9929c0b" />
+</div>
 
+## 这是什么
 
-<img width="1920" height="1020" alt="image" src="https://github.com/user-attachments/assets/71dad258-4ec5-4803-81de-b5a79d349db3" />
+Codex SkinKit 为 Microsoft Store 版 Codex 添加可定制的首页横幅和任务背景。侧边栏、卡片、项目选择器、任务内容、菜单和输入框仍然可以正常交互。
 
+项目不会修改官方 MSIX 安装包或 `app.asar`。主题通过仅监听 `127.0.0.1` 的本地 Chrome DevTools Protocol 调试会话注入，恢复后即可回到 Codex 原始外观。
 
-## Install
+## 效果预览
 
-1. Install and open the official Codex app once.
-2. Download this repository and extract it completely.
-3. Double-click `Install Codex SkinKit.cmd`.
-4. Allow the one-time Codex restart.
+### World Cup Night
 
-The installer creates Desktop entries for starting, customizing, switching, verifying, and restoring the theme.
+![World Cup Night 主题实机效果](./assets/readme/world-cup-night-preview.png)
 
-## Switch themes
+### Deep Space Mission Control
 
-Double-click `Codex SkinKit - Switch Theme.cmd`, choose a saved preset, and select Apply. The bundled presets are `Open Portal` and `Deep Space Mission Control`.
+![Deep Space Mission Control 主题实机效果](./assets/readme/deep-space-preview.png)
 
-## Customize
+## 功能
 
-Double-click `Codex SkinKit - Customize.cmd`, then select a PNG or JPEG image up to 16 MB.
+- 双击脚本即可完成安装、启动、验证和恢复
+- 在 3 套内置主题之间快速切换
+- 使用自己的 PNG 或 JPEG 图片创建主题
+- 自动保存并恢复 Codex 原始基础色
+- 校验 Codex 包、Node.js 签名及复制文件哈希
+- 无需全局安装 Node.js
 
-For best results, use a wide image at least 2000 px across and keep important subjects away from the left edge.
+## 系统要求
 
-## Verify
+- Windows 10 或 Windows 11（x64）
+- 从 Microsoft Store 安装的官方 Codex App
+- PowerShell 5.1 或更高版本
 
-Run `Codex SkinKit - Verify.cmd`. A successful live check returns `pass: true` and saves a screenshot to the Desktop.
+> 当前版本仅支持 Windows，不支持其他安装来源的 Codex。
+
+## 快速开始
+
+1. 安装并至少启动一次官方 Codex App，然后关闭 Codex。
+2. 下载本仓库，并完整解压到一个普通文件夹中。
+3. 双击 `Install Codex SkinKit.cmd`。
+4. 按提示允许 Codex 重启。
+
+安装完成后，桌面会生成以下入口：
+
+| 桌面入口 | 用途 |
+| --- | --- |
+| `Codex SkinKit.cmd` | 以当前主题启动 Codex |
+| `Codex SkinKit - Customize.cmd` | 使用自己的图片创建主题 |
+| `Codex SkinKit - Switch Theme.cmd` | 切换内置主题 |
+| `Codex SkinKit - Verify.cmd` | 检查主题状态并保存验证截图 |
+| `Codex SkinKit - Restore.cmd` | 移除主题并恢复 Codex 原始外观 |
+
+## 内置主题
+
+| Open Portal | Deep Space Mission Control | World Cup Night |
+| --- | --- | --- |
+| ![Open Portal](./profiles/open-portal/open-portal.png) | ![Deep Space Mission Control](./profiles/deep-space/earth-airglow.jpg) | ![World Cup Night](./profiles/world-cup/world-cup-night.png) |
+
+双击桌面的 `Codex SkinKit - Switch Theme.cmd`，选择主题后点击 **Apply**。切换主题时 Codex 会按需重启。
+
+## 自定义主题
+
+双击 `Codex SkinKit - Customize.cmd`，选择不超过 16 MB 的 PNG、JPG 或 JPEG 图片。
+
+建议使用宽度至少为 2000 px 的横向图片，并避免把重要主体放在图片左侧，以免被界面内容遮挡。
+
+如需通过命令行进一步设置名称、文案和颜色，可运行：
+
+```powershell
+powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\customize-theme-windows.ps1 `
+  -Image "C:\path\to\background.jpg" `
+  -Name "My Theme" `
+  -Accent "#7cff46"
+```
+
+## 验证与测试
+
+双击 `Codex SkinKit - Verify.cmd`。验证成功时会返回 `pass: true`，并在桌面保存 `Codex SkinKit Verification.png`。
+
+开发者也可以在仓库目录运行：
+
+```powershell
+npm test
+```
+
+或：
 
 ```powershell
 powershell -NoProfile -ExecutionPolicy Bypass -File .\tests\run-tests-windows.ps1
 ```
 
-## Restore
+## 恢复原始界面
 
-Double-click `Codex SkinKit - Restore.cmd` to remove the live theme, restore the saved Codex base colors, close the debugging session, and start Codex normally.
+双击 `Codex SkinKit - Restore.cmd`。脚本会移除当前主题、恢复已保存的 Codex 基础色、关闭本地调试会话，并正常重启 Codex。
 
-## Security
+## 安全说明
 
-- Only the official `OpenAI.Codex` Microsoft Store package is accepted.
-- The bundled Node.js signature and copied-file hash are verified.
-- Chrome DevTools Protocol listens on `127.0.0.1` only.
-- The injector accepts only native `app://` Codex pages.
-- The official package, signature, and `app.asar` remain untouched.
+- 只接受官方 `OpenAI.Codex` Microsoft Store 包。
+- 不修改官方安装包、签名或 `app.asar`。
+- Chrome DevTools Protocol 只监听本机 `127.0.0.1`。
+- 注入器只接受 Codex 原生的 `app://` 页面。
+- 会验证随附 Node.js 的数字签名和复制文件的哈希。
 
-CDP is a local unauthenticated debugging interface while the theme is active. Do not run untrusted local software during a themed session; use Restore when the theme is not needed.
+主题启用期间，CDP 是本机上的未认证调试接口。请勿同时运行不可信的本地软件；不需要主题时，建议使用 Restore 关闭调试会话。
 
-## Requirements
+## 常见问题
 
-- Windows 10 or Windows 11, x64
-- Official Microsoft Store Codex app
-- PowerShell 5.1 or newer
+### 安装器提示找不到 Codex 配置
 
-No global Node.js installation is required.
+先正常启动一次官方 Codex App，等待首页加载完成后关闭，再重新运行安装器。
 
-## License
+### 自定义图片无法使用
 
-MIT. Codex and OpenAI are trademarks of OpenAI. This project is unofficial and is not affiliated with or endorsed by OpenAI.
+确认图片格式为 PNG、JPG 或 JPEG，且文件大小不超过 16 MB。
+
+### 想彻底停用主题
+
+运行桌面的 `Codex SkinKit - Restore.cmd`。以后需要时可以重新运行安装器。
+
+## 赞助与联系
+
+如果 Codex SkinKit 对你有帮助，欢迎通过赞赏码支持项目维护。产品合作、项目赞助、问题反馈或 Codex 相关交流，可以扫码添加微信；添加时请注明来意。
+
+| 微信联系 | 赞赏支持 |
+| --- | --- |
+| <img src="./assets/readme/wechat-contact.png" alt="微信联系二维码" width="220" /> | <img src="./assets/readme/wechat-reward.jpg" alt="微信赞赏码" width="220" /> |
+
+> 以上联系方式和赞赏方式与 [Learn Codex](https://github.com/ismoshushi/learn-codex) 项目一致。
+
+## 参与贡献
+
+欢迎提交 Issue 或 Pull Request。请尽量说明 Windows 版本、Codex 版本、复现步骤和验证结果；涉及界面问题时，附上截图会更容易定位。
+
+## 声明与许可证
+
+本项目采用 [MIT License](./LICENSE)。Codex 和 OpenAI 是 OpenAI 的商标。
+
+Codex SkinKit 是社区维护的非官方项目，与 OpenAI 无隶属关系，也未获得 OpenAI 认可或背书。用户提供的图片仍由其原权利人所有，MIT License 不授予这些图片或相关商标的使用权。
