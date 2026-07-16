@@ -1,0 +1,24 @@
+{
+  "schemaVersion": 1,
+  "id": "world-cup-night",
+  "name": "World Cup Night",
+  "brandSubtitle": "GLOBAL FOOTBALL COMMAND",
+  "tagline": "Build with the focus of a final under the lights.",
+  "projectPrefix": "Match / ",
+  "projectLabel": "Select match",
+  "statusText": "MATCHDAY ONLINE",
+  "quote": "ONE WORLD. ONE GAME.",
+  "image": "world-cup-night.png",
+  "colors": {
+    "background": "#050b18",
+    "panel": "#081426",
+    "panelAlt": "#0d2035",
+    "accent": "#75c9f1",
+    "accentAlt": "#f2cf63",
+    "secondary": "#eaf7ff",
+    "highlight": "#d6ad3c",
+    "text": "#f7fbff",
+    "muted": "#a9c8dc",
+    "line": "rgba(117, 201, 241, .32)"
+  }
+}

@@ -16,7 +16,7 @@ if (@(Get-CodexMainProcesses).Count -gt 0 -and -not $ready) {
 }
 if (-not $ready) {
   $Port = Select-AvailablePort $Port
-  Start-Process -FilePath $CodexExe -ArgumentList "--remote-debugging-address=127.0.0.1", "--remote-debugging-port=$Port"
+  Start-CodexDebugging $Port
   $deadline = (Get-Date).AddSeconds(35)
   while (-not (Test-CodexEndpoint $Port) -and (Get-Date) -lt $deadline) { Start-Sleep -Milliseconds 400 }
   if (-not (Test-CodexEndpoint $Port)) { Fail "Codex did not expose a verified loopback CDP endpoint on port $Port." }

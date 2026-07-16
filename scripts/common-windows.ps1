@@ -33,11 +33,47 @@ function Discover-Codex {
   $package = Get-AppxPackage -Name 'OpenAI.Codex' | Sort-Object Version -Descending | Select-Object -First 1
   if (-not $package) { Fail 'Could not find the official Microsoft Store Codex package (OpenAI.Codex).' }
   $script:CodexPackage = $package
+  $script:CodexAppUserModelId = "$($package.PackageFamilyName)!App"
   $script:CodexVersion = $package.Version.ToString()
   $script:CodexExe = Join-Path $package.InstallLocation 'app\ChatGPT.exe'
   $script:PackagedNode = Join-Path $package.InstallLocation 'app\resources\cua_node\bin\node.exe'
   if (-not (Test-Path -LiteralPath $CodexExe -PathType Leaf)) { Fail "Codex executable is missing: $CodexExe" }
   if (-not (Test-Path -LiteralPath $PackagedNode -PathType Leaf)) { Fail "Codex bundled Node.js is missing: $PackagedNode" }
+}
+
+function Start-CodexDebugging([int]$Port) {
+  if (-not ('CodexSkinKit.ApplicationActivationManager' -as [type])) {
+    Add-Type -TypeDefinition @'
+using System;
+using System.Runtime.InteropServices;
+
+namespace CodexSkinKit {
+  [ComImport, Guid("2e941141-7f97-4756-ba1d-9decde894a3d"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
+  interface IApplicationActivationManager {
+    int ActivateApplication(string appUserModelId, string arguments, uint options, out uint processId);
+    int ActivateForFile(string appUserModelId, IntPtr itemArray, string verb, out uint processId);
+    int ActivateForProtocol(string appUserModelId, IntPtr itemArray, out uint processId);
+  }
+
+  [ComImport, Guid("45BA127D-10A8-46EA-8AB7-56EA9078943C")]
+  class ApplicationActivationManagerCom { }
+
+  public static class ApplicationActivationManager {
+    public static uint Activate(string appUserModelId, string arguments) {
+      uint processId;
+      var manager = (IApplicationActivationManager)new ApplicationActivationManagerCom();
+      int result = manager.ActivateApplication(appUserModelId, arguments, 0, out processId);
+      if (result < 0) Marshal.ThrowExceptionForHR(result);
+      return processId;
+    }
+  }
+}
+'@
+  }
+  [void][CodexSkinKit.ApplicationActivationManager]::Activate(
+    $CodexAppUserModelId,
+    "--remote-debugging-address=127.0.0.1 --remote-debugging-port=$Port"
+  )
 }
 
 function Require-WindowsRuntime {
