@@ -5,7 +5,7 @@ Discover-Codex; Require-WindowsRuntime; Ensure-StateRoot
 $profiles = @(Get-ChildItem -LiteralPath $ProfilesRoot -Directory -ErrorAction SilentlyContinue | Where-Object {
   Test-Path -LiteralPath (Join-Path $_.FullName 'theme.json')
 } | ForEach-Object {
-  $config = Get-Content -LiteralPath (Join-Path $_.FullName 'theme.json') -Raw | ConvertFrom-Json
+  $config = Get-Content -LiteralPath (Join-Path $_.FullName 'theme.json') -Raw -Encoding UTF8 | ConvertFrom-Json
   [pscustomobject]@{ Id = $_.Name; Name = $config.name; Path = $_.FullName }
 })
 if ($profiles.Count -lt 1) { Fail "No theme profiles were found in $ProfilesRoot" }

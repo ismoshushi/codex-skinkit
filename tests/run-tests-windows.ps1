@@ -3,10 +3,15 @@ $root = Split-Path -Parent $PSScriptRoot
 . (Join-Path $root 'scripts\common-windows.ps1')
 Discover-Codex; Require-WindowsRuntime
 if (@(Get-CodexMainProcesses).Count -lt 0) { throw 'Process discovery did not return an array-compatible result.' }
+$entryPoints = @(Get-ChildItem -LiteralPath $root -File -Filter '*.cmd')
+if ($entryPoints.Count -ne 1 -or $entryPoints[0].Name -ne 'Codex SkinKit.cmd') { throw 'The repository must expose one Codex SkinKit CMD entry point.' }
+if (-not (Test-Path -LiteralPath (Join-Path $root 'scripts\control-center-windows.ps1'))) { throw 'The control center script is missing.' }
 Get-ChildItem (Join-Path $root 'scripts') -Filter '*.ps1' | ForEach-Object { [void][scriptblock]::Create((Get-Content $_.FullName -Raw)) }
 Get-ChildItem (Join-Path $root 'scripts'),(Join-Path $root 'assets') -Include '*.mjs','*.js' -Recurse | Where-Object { $_.Name -notlike '._*' } | ForEach-Object { & $Node --check $_.FullName | Out-Null; if ($LASTEXITCODE -ne 0) { throw "JavaScript syntax failed: $($_.FullName)" } }
 & $Node (Join-Path $root 'scripts\injector.mjs') --check-payload | Out-Null
 foreach ($profile in Get-ChildItem (Join-Path $root 'profiles') -Directory) {
+  $profileConfig = Get-Content -LiteralPath (Join-Path $profile.FullName 'theme.json') -Raw -Encoding UTF8 | ConvertFrom-Json
+  if ($profileConfig.schemaVersion -ne 1 -or -not $profileConfig.name) { throw "Theme profile metadata failed UTF-8 parsing: $($profile.Name)" }
   & $Node (Join-Path $root 'scripts\injector.mjs') --check-payload --theme-dir $profile.FullName | Out-Null
   if ($LASTEXITCODE -ne 0) { throw "Theme profile failed validation: $($profile.Name)" }
 }

@@ -16,18 +16,33 @@ It never modifies the official MSIX package or `app.asar`. The theme is injected
 
 ## Preview
 
-### World Cup Night
-
-![World Cup Night theme running in Codex](./assets/readme/world-cup-night-preview.png)
-
-### Deep Space Mission Control
-
-![Deep Space Mission Control theme running in Codex](./assets/readme/deep-space-preview.png)
+<table>
+  <tr>
+    <th width="33.33%">World Cup Night</th>
+    <th width="33.33%">Deep Space Mission Control</th>
+    <th width="33.33%">Ember Bloom</th>
+  </tr>
+  <tr>
+    <td><a href="./assets/readme/world-cup-night-preview.png"><img src="./assets/readme/world-cup-night-preview.png" alt="World Cup Night theme running in Codex" width="100%" /></a></td>
+    <td><a href="./assets/readme/deep-space-preview.png"><img src="./assets/readme/deep-space-preview.png" alt="Deep Space Mission Control theme running in Codex" width="100%" /></a></td>
+    <td><a href="./assets/readme/ember-bloom-preview.png"><img src="./assets/readme/ember-bloom-preview.png" alt="Ember Bloom theme running in Codex" width="100%" /></a></td>
+  </tr>
+  <tr>
+    <th>Aurora Veil</th>
+    <th></th>
+    <th></th>
+  </tr>
+  <tr>
+    <td><a href="./assets/readme/aurora-veil-preview.png"><img src="./assets/readme/aurora-veil-preview.png" alt="Aurora Veil theme running in Codex" width="100%" /></a></td>
+    <td></td>
+    <td></td>
+  </tr>
+</table>
 
 ## Features
 
 - Double-click installation, launch, verification, and restoration
-- Quick switching among three bundled themes
+- Quick switching among five bundled themes
 - Custom themes made from your own PNG or JPEG image
 - Automatic backup and restoration of the original Codex base colors
 - Validation of the Codex package, Node.js signature, and copied-file hashes
@@ -45,18 +60,19 @@ It never modifies the official MSIX package or `app.asar`. The theme is injected
 
 1. Install and open the official Codex app at least once, then close it.
 2. Download this repository and extract it completely to a regular folder.
-3. Double-click `Install Codex SkinKit.cmd`.
+3. Double-click `Codex SkinKit.cmd` and choose **Install / Update**.
 4. Allow the prompted Codex restart.
 
-The installer creates these Desktop launchers:
+The installer creates only one Desktop entry, `Codex SkinKit.cmd`. Open it to access the control center:
 
-| Desktop launcher | Purpose |
+| Control center action | Purpose |
 | --- | --- |
-| `Codex SkinKit.cmd` | Start Codex with the current theme |
-| `Codex SkinKit - Customize.cmd` | Create a theme from your own image |
-| `Codex SkinKit - Switch Theme.cmd` | Switch between bundled themes |
-| `Codex SkinKit - Verify.cmd` | Check the live theme and save a screenshot |
-| `Codex SkinKit - Restore.cmd` | Remove the theme and restore the original appearance |
+| Install / Update | Install or update SkinKit |
+| Start Codex | Start Codex with the current theme |
+| Switch Theme | Switch between bundled themes |
+| Customize Theme | Create a theme from your own image |
+| Verify Theme | Check the live theme and save a screenshot |
+| Restore Codex | Remove the theme and restore the original appearance |
 
 ## Bundled themes
 
@@ -64,11 +80,17 @@ The installer creates these Desktop launchers:
 | --- | --- | --- |
 | ![Open Portal](./profiles/open-portal/open-portal.png) | ![Deep Space Mission Control](./profiles/deep-space/earth-airglow.jpg) | ![World Cup Night](./profiles/world-cup/world-cup-night.png) |
 
-Double-click `Codex SkinKit - Switch Theme.cmd`, select a theme, and choose **Apply**. Codex restarts when needed.
+| Aurora Veil | Ember Bloom |
+| --- | --- |
+| ![Aurora Veil](./profiles/aurora-veil/art.png) | ![Ember Bloom](./profiles/ember-bloom/art.png) |
+
+Aurora Veil and Ember Bloom are adapted from the MIT-licensed original demo themes in [Finderchangchang/codex-autoskin](https://github.com/Finderchangchang/codex-autoskin) and converted to the SkinKit theme schema.
+
+Open `Codex SkinKit.cmd`, choose **Switch Theme**, select a theme, and choose **Apply**. Codex restarts when needed.
 
 ## Customize a theme
 
-Double-click `Codex SkinKit - Customize.cmd` and select a PNG, JPG, or JPEG image up to 16 MB.
+Open the control center, choose **Customize Theme**, and select a PNG, JPG, or JPEG image up to 16 MB.
 
 For best results, use a wide image at least 2000 px across and keep important subjects away from the left edge, where interface content may cover them.
 
@@ -83,7 +105,7 @@ powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\customize-theme-wi
 
 ## Verify and test
 
-Double-click `Codex SkinKit - Verify.cmd`. A successful check returns `pass: true` and saves `Codex SkinKit Verification.png` to the Desktop.
+Open the control center and choose **Verify Theme**. A successful check returns `pass: true` and saves `Codex SkinKit Verification.png` to the Desktop.
 
 Developers can also run:
 
@@ -99,7 +121,7 @@ powershell -NoProfile -ExecutionPolicy Bypass -File .\tests\run-tests-windows.ps
 
 ## Restore Codex
 
-Double-click `Codex SkinKit - Restore.cmd`. It removes the live theme, restores the saved Codex base colors, closes the local debugging session, and starts Codex normally.
+Open the control center and choose **Restore Codex**. It removes the live theme, restores the saved Codex base colors, closes the local debugging session, and starts Codex normally.
 
 ## Security
 
@@ -123,7 +145,7 @@ Make sure the image is PNG, JPG, or JPEG and no larger than 16 MB.
 
 ### I want to disable the theme completely
 
-Run `Codex SkinKit - Restore.cmd` from the Desktop. You can reinstall the theme later.
+Open `Codex SkinKit.cmd` from the Desktop and choose **Restore Codex**. You can reinstall later with **Install / Update**.
 
 ## Sponsor and contact
 
@@ -138,6 +160,10 @@ If Codex SkinKit saves you time, you can support ongoing maintenance through the
 ## Contributing
 
 Issues and pull requests are welcome. Please include your Windows version, Codex version, reproduction steps, and verification results. Screenshots are especially useful for interface problems.
+
+## Acknowledgements
+
+Thanks to [Finderchangchang/codex-autoskin](https://github.com/Finderchangchang/codex-autoskin) and its author, Vikicc, for the procedurally generated original theme artwork and the detailed theme design approach. The `Aurora Veil` and `Ember Bloom` themes in this project were adapted to the Codex SkinKit format under its MIT license.
 
 ## Disclaimer and license
 

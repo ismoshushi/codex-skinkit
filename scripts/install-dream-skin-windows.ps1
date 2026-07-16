@@ -32,19 +32,15 @@ if ($LASTEXITCODE -ne 0) { Fail 'Could not save the Codex base theme.' }
 
 if (-not $NoLaunchers) {
   $desktop = [Environment]::GetFolderPath('Desktop')
-  $launchers = @{
-    'Codex SkinKit.cmd' = "start-dream-skin-windows.ps1 -Port $Port -PromptRestart"
-    'Codex SkinKit - Customize.cmd' = 'customize-theme-windows.ps1'
-    'Codex SkinKit - Switch Theme.cmd' = 'switch-theme-windows.ps1'
-    'Codex SkinKit - Verify.cmd' = 'verify-dream-skin-windows.ps1 -Screenshot "%USERPROFILE%\Desktop\Codex SkinKit Verification.png"'
-    'Codex SkinKit - Restore.cmd' = 'restore-dream-skin-windows.ps1 -RestoreBaseTheme -RestartCodex'
-  }
-  foreach ($item in $launchers.GetEnumerator()) {
-    $target = Join-Path $desktop $item.Key
-    $scriptName, $scriptArgs = $item.Value -split ' ', 2
-    $content = "@echo off`r`nrem CodexDreamSkinStudio launcher`r`npowershell.exe -NoProfile -ExecutionPolicy Bypass -File `"$InstallRoot\scripts\$scriptName`" $scriptArgs`r`nif errorlevel 1 pause`r`n"
-    [IO.File]::WriteAllText($target, $content, [Text.UTF8Encoding]::new($false))
-  }
+  @(
+    'Codex SkinKit - Customize.cmd',
+    'Codex SkinKit - Switch Theme.cmd',
+    'Codex SkinKit - Verify.cmd',
+    'Codex SkinKit - Restore.cmd'
+  ) | ForEach-Object { Remove-Item -LiteralPath (Join-Path $desktop $_) -Force -ErrorAction SilentlyContinue }
+  $target = Join-Path $desktop 'Codex SkinKit.cmd'
+  $content = "@echo off`r`npowershell.exe -NoProfile -ExecutionPolicy Bypass -File `"$InstallRoot\scripts\control-center-windows.ps1`" -Port $Port`r`nif errorlevel 1 pause`r`n"
+  [IO.File]::WriteAllText($target, $content, [Text.UTF8Encoding]::new($false))
 }
 Write-Host "Codex SkinKit $SkinVersion (Windows build $WindowsBuild) installed at $InstallRoot for Codex $CodexVersion using signed Node.js $NodeVersion."
 if (-not $NoLaunch) { & (Join-Path $ScriptDir 'start-dream-skin-windows.ps1') -Port $Port -PromptRestart }

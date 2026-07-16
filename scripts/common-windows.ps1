@@ -151,7 +151,9 @@ function Stop-RecordedInjector {
   $process = Get-CimInstance Win32_Process -Filter "ProcessId=$($state.injectorPid)" -ErrorAction SilentlyContinue
   if (-not $process) { return }
   if ($process.ExecutablePath -ne $state.nodePath -or $process.CommandLine -notlike "*$($state.injectorPath)*--watch*") {
-    Fail "Saved injector identity does not match PID $($state.injectorPid); it was not stopped."
+    Remove-Item -LiteralPath $StatePath -Force -ErrorAction SilentlyContinue
+    Write-Warning "Saved injector PID $($state.injectorPid) was reused by another process. The stale SkinKit state was cleared without stopping that process."
+    return
   }
   Stop-Process -Id $state.injectorPid
 }

@@ -1,0 +1,24 @@
+{
+  "schemaVersion": 1,
+  "id": "aurora-veil",
+  "name": "Aurora Veil",
+  "brandSubtitle": "AURORA NIGHT OPERATIONS",
+  "tagline": "在极光夜空下，把灵感写进每一行代码。",
+  "projectPrefix": "Aurora / ",
+  "projectLabel": "Select aurora project",
+  "statusText": "AURORA ONLINE",
+  "quote": "CODE BENEATH THE LIGHT",
+  "image": "art.png",
+  "colors": {
+    "background": "#0d1028",
+    "panel": "#171a3c",
+    "panelAlt": "#222653",
+    "accent": "#45c8ba",
+    "accentAlt": "#7a6fe0",
+    "secondary": "#9a91ff",
+    "highlight": "#5b52c7",
+    "text": "#f5f7ff",
+    "muted": "#c1c8e5",
+    "line": "rgba(122, 111, 224, .36)"
+  }
+}

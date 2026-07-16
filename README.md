@@ -16,18 +16,33 @@ Codex SkinKit 为 Microsoft Store 版 Codex 添加可定制的首页横幅和任
 
 ## 效果预览
 
-### World Cup Night
-
-![World Cup Night 主题实机效果](./assets/readme/world-cup-night-preview.png)
-
-### Deep Space Mission Control
-
-![Deep Space Mission Control 主题实机效果](./assets/readme/deep-space-preview.png)
+<table>
+  <tr>
+    <th width="33.33%">World Cup Night</th>
+    <th width="33.33%">Deep Space Mission Control</th>
+    <th width="33.33%">Ember Bloom</th>
+  </tr>
+  <tr>
+    <td><a href="./assets/readme/world-cup-night-preview.png"><img src="./assets/readme/world-cup-night-preview.png" alt="World Cup Night 主题实机效果" width="100%" /></a></td>
+    <td><a href="./assets/readme/deep-space-preview.png"><img src="./assets/readme/deep-space-preview.png" alt="Deep Space Mission Control 主题实机效果" width="100%" /></a></td>
+    <td><a href="./assets/readme/ember-bloom-preview.png"><img src="./assets/readme/ember-bloom-preview.png" alt="Ember Bloom 主题实机效果" width="100%" /></a></td>
+  </tr>
+  <tr>
+    <th>Aurora Veil</th>
+    <th></th>
+    <th></th>
+  </tr>
+  <tr>
+    <td><a href="./assets/readme/aurora-veil-preview.png"><img src="./assets/readme/aurora-veil-preview.png" alt="Aurora Veil 主题实机效果" width="100%" /></a></td>
+    <td></td>
+    <td></td>
+  </tr>
+</table>
 
 ## 功能
 
 - 双击脚本即可完成安装、启动、验证和恢复
-- 在 3 套内置主题之间快速切换
+- 在 5 套内置主题之间快速切换
 - 使用自己的 PNG 或 JPEG 图片创建主题
 - 自动保存并恢复 Codex 原始基础色
 - 校验 Codex 包、Node.js 签名及复制文件哈希
@@ -45,18 +60,19 @@ Codex SkinKit 为 Microsoft Store 版 Codex 添加可定制的首页横幅和任
 
 1. 安装并至少启动一次官方 Codex App，然后关闭 Codex。
 2. 下载本仓库，并完整解压到一个普通文件夹中。
-3. 双击 `Install Codex SkinKit.cmd`。
+3. 双击 `Codex SkinKit.cmd`，选择 **Install / Update**。
 4. 按提示允许 Codex 重启。
 
-安装完成后，桌面会生成以下入口：
+安装完成后，桌面只会生成一个 `Codex SkinKit.cmd`。双击即可打开管理中心：
 
-| 桌面入口 | 用途 |
+| 管理中心操作 | 用途 |
 | --- | --- |
-| `Codex SkinKit.cmd` | 以当前主题启动 Codex |
-| `Codex SkinKit - Customize.cmd` | 使用自己的图片创建主题 |
-| `Codex SkinKit - Switch Theme.cmd` | 切换内置主题 |
-| `Codex SkinKit - Verify.cmd` | 检查主题状态并保存验证截图 |
-| `Codex SkinKit - Restore.cmd` | 移除主题并恢复 Codex 原始外观 |
+| Install / Update | 安装或更新 SkinKit |
+| Start Codex | 以当前主题启动 Codex |
+| Switch Theme | 切换内置主题 |
+| Customize Theme | 使用自己的图片创建主题 |
+| Verify Theme | 检查主题状态并保存验证截图 |
+| Restore Codex | 移除主题并恢复 Codex 原始外观 |
 
 ## 内置主题
 
@@ -64,11 +80,17 @@ Codex SkinKit 为 Microsoft Store 版 Codex 添加可定制的首页横幅和任
 | --- | --- | --- |
 | ![Open Portal](./profiles/open-portal/open-portal.png) | ![Deep Space Mission Control](./profiles/deep-space/earth-airglow.jpg) | ![World Cup Night](./profiles/world-cup/world-cup-night.png) |
 
-双击桌面的 `Codex SkinKit - Switch Theme.cmd`，选择主题后点击 **Apply**。切换主题时 Codex 会按需重启。
+| Aurora Veil | Ember Bloom |
+| --- | --- |
+| ![Aurora Veil](./profiles/aurora-veil/art.png) | ![Ember Bloom](./profiles/ember-bloom/art.png) |
+
+Aurora Veil 与 Ember Bloom 改编自 [Finderchangchang/codex-autoskin](https://github.com/Finderchangchang/codex-autoskin) 的 MIT 许可原创演示主题，并已转换为 SkinKit 的主题配置格式。
+
+打开桌面的 `Codex SkinKit.cmd`，选择 **Switch Theme**，再选择主题并点击 **Apply**。切换主题时 Codex 会按需重启。
 
 ## 自定义主题
 
-双击 `Codex SkinKit - Customize.cmd`，选择不超过 16 MB 的 PNG、JPG 或 JPEG 图片。
+打开管理中心并选择 **Customize Theme**，然后选择不超过 16 MB 的 PNG、JPG 或 JPEG 图片。
 
 建议使用宽度至少为 2000 px 的横向图片，并避免把重要主体放在图片左侧，以免被界面内容遮挡。
 
@@ -83,7 +105,7 @@ powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\customize-theme-wi
 
 ## 验证与测试
 
-双击 `Codex SkinKit - Verify.cmd`。验证成功时会返回 `pass: true`，并在桌面保存 `Codex SkinKit Verification.png`。
+打开管理中心并选择 **Verify Theme**。验证成功时会返回 `pass: true`，并在桌面保存 `Codex SkinKit Verification.png`。
 
 开发者也可以在仓库目录运行：
 
@@ -99,7 +121,7 @@ powershell -NoProfile -ExecutionPolicy Bypass -File .\tests\run-tests-windows.ps
 
 ## 恢复原始界面
 
-双击 `Codex SkinKit - Restore.cmd`。脚本会移除当前主题、恢复已保存的 Codex 基础色、关闭本地调试会话，并正常重启 Codex。
+打开管理中心并选择 **Restore Codex**。脚本会移除当前主题、恢复已保存的 Codex 基础色、关闭本地调试会话，并正常重启 Codex。
 
 ## 安全说明
 
@@ -123,7 +145,7 @@ powershell -NoProfile -ExecutionPolicy Bypass -File .\tests\run-tests-windows.ps
 
 ### 想彻底停用主题
 
-运行桌面的 `Codex SkinKit - Restore.cmd`。以后需要时可以重新运行安装器。
+打开桌面的 `Codex SkinKit.cmd` 并选择 **Restore Codex**。以后需要时可以通过 **Install / Update** 重新安装。
 
 ## 赞助与联系
 
@@ -138,6 +160,10 @@ powershell -NoProfile -ExecutionPolicy Bypass -File .\tests\run-tests-windows.ps
 ## 参与贡献
 
 欢迎提交 Issue 或 Pull Request。请尽量说明 Windows 版本、Codex 版本、复现步骤和验证结果；涉及界面问题时，附上截图会更容易定位。
+
+## 致谢
+
+感谢 [Finderchangchang/codex-autoskin](https://github.com/Finderchangchang/codex-autoskin) 项目及其作者 Vikicc。该项目提供了程序化生成的原创主题素材和完整的主题设计思路；本项目中的 `Aurora Veil` 与 `Ember Bloom` 在其 MIT 许可基础上适配为 Codex SkinKit 的主题格式。
 
 ## 声明与许可证
 

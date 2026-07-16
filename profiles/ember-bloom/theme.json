@@ -1,0 +1,24 @@
+{
+  "schemaVersion": 1,
+  "id": "ember-bloom",
+  "name": "Ember Bloom",
+  "brandSubtitle": "WARM LIGHT CREATIVE STUDIO",
+  "tagline": "在暖光花瓣间，把热爱慢慢展开。",
+  "projectPrefix": "Bloom / ",
+  "projectLabel": "Select bloom project",
+  "statusText": "EMBER GLOW ONLINE",
+  "quote": "LET IDEAS BLOOM",
+  "image": "art.png",
+  "colors": {
+    "background": "#24130f",
+    "panel": "#351c16",
+    "panelAlt": "#47251c",
+    "accent": "#eaa27a",
+    "accentAlt": "#f4c29d",
+    "secondary": "#dd8a62",
+    "highlight": "#c26744",
+    "text": "#fff8f1",
+    "muted": "#e8c7b6",
+    "line": "rgba(234, 162, 122, .36)"
+  }
+}
