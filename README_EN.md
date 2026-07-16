@@ -14,6 +14,16 @@ Codex SkinKit adds a customizable home banner and task background to the Microso
 
 It never modifies the official MSIX package or `app.asar`. The theme is injected through a local Chrome DevTools Protocol session bound to `127.0.0.1`, and the Restore command returns Codex to its original appearance.
 
+## Preview
+
+### World Cup Night
+
+![World Cup Night theme running in Codex](./assets/readme/world-cup-night-preview.png)
+
+### Deep Space Mission Control
+
+![Deep Space Mission Control theme running in Codex](./assets/readme/deep-space-preview.png)
+
 ## Features
 
 - Double-click installation, launch, verification, and restoration

@@ -14,6 +14,16 @@ Codex SkinKit 为 Microsoft Store 版 Codex 添加可定制的首页横幅和任
 
 项目不会修改官方 MSIX 安装包或 `app.asar`。主题通过仅监听 `127.0.0.1` 的本地 Chrome DevTools Protocol 调试会话注入，恢复后即可回到 Codex 原始外观。
 
+## 效果预览
+
+### World Cup Night
+
+![World Cup Night 主题实机效果](./assets/readme/world-cup-night-preview.png)
+
+### Deep Space Mission Control
+
+![Deep Space Mission Control 主题实机效果](./assets/readme/deep-space-preview.png)
+
 ## 功能
 
 - 双击脚本即可完成安装、启动、验证和恢复
