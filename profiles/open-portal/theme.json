@@ -1,6 +1,9 @@
 {
   "schemaVersion": 1,
   "id": "open-portal",
+  "order": 10,
+  "layout": "cinematic-banner",
+  "effect": "portal-sparks",
   "name": "Open Portal",
   "brandSubtitle": "CODEX SKINKIT",
   "tagline": "Turn ideas into working software.",

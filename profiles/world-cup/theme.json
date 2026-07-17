@@ -1,6 +1,9 @@
 {
   "schemaVersion": 1,
   "id": "world-cup-night",
+  "order": 30,
+  "layout": "immersive-board",
+  "effect": "portal-sparks",
   "name": "World Cup Night",
   "brandSubtitle": "GLOBAL FOOTBALL COMMAND",
   "tagline": "Build with the focus of a final under the lights.",

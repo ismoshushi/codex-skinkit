@@ -42,5 +42,9 @@ if (-not $NoLaunchers) {
   $content = "@echo off`r`npowershell.exe -NoProfile -ExecutionPolicy Bypass -File `"$InstallRoot\scripts\control-center-windows.ps1`" -Port $Port`r`nif errorlevel 1 pause`r`n"
   [IO.File]::WriteAllText($target, $content, [Text.UTF8Encoding]::new($false))
 }
+$watchdogCommand = "powershell.exe -NoProfile -ExecutionPolicy Bypass -File `"$WatchdogScript`""
+$watchdogLauncher = "Set shell = CreateObject(`"WScript.Shell`")`r`nshell.Run `"$($watchdogCommand.Replace('`"', '`"`"'))`", 0, False`r`n"
+[IO.File]::WriteAllText($WatchdogStartupPath, $watchdogLauncher, [Text.UTF8Encoding]::new($false))
+Enable-SkinKitWatchdog
 Write-Host "Codex SkinKit $SkinVersion (Windows build $WindowsBuild) installed at $InstallRoot for Codex $CodexVersion using signed Node.js $NodeVersion."
 if (-not $NoLaunch) { & (Join-Path $ScriptDir 'start-dream-skin-windows.ps1') -Port $Port -PromptRestart }

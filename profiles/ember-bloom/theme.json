@@ -1,6 +1,9 @@
 {
   "schemaVersion": 1,
   "id": "ember-bloom",
+  "order": 50,
+  "layout": "immersive-board",
+  "effect": "sakura-petals",
   "name": "Ember Bloom",
   "brandSubtitle": "WARM LIGHT CREATIVE STUDIO",
   "tagline": "在暖光花瓣间，把热爱慢慢展开。",

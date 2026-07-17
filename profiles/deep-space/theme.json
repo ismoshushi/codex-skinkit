@@ -1,6 +1,9 @@
 {
   "schemaVersion": 1,
   "id": "deep-space-mission-control",
+  "order": 20,
+  "layout": "command-center",
+  "effect": "orbital-scan",
   "name": "Deep Space Mission Control",
   "brandSubtitle": "ORBITAL SOFTWARE OPERATIONS",
   "tagline": "Observe the signal, plan the orbit, ship the mission.",

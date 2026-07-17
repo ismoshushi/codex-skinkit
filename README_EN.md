@@ -39,11 +39,28 @@ It never modifies the official MSIX package or `app.asar`. The theme is injected
   </tr>
 </table>
 
+## In-app theme center
+
+Open the theme center from the upper-right corner of Codex. No application restart is required:
+
+- Switch instantly among five bundled themes
+- Return to native Codex with System Default
+- Upload PNG, JPEG, or WebP with local compression and palette extraction
+- Uploaded themes remain on this computer and never replace bundled themes
+
+<p align="center">
+  <a href="./assets/readme/theme-center-preview.png"><img src="./assets/readme/theme-center-preview.png" alt="Codex SkinKit in-app theme center" width="760" /></a>
+</p>
+
 ## Features
 
 - Double-click installation, launch, verification, and restoration
-- Quick switching among five bundled themes
-- Custom themes made from your own PNG or JPEG image
+- Switch among five bundled themes from inside Codex without restarting
+- A permanent System Default entry restores the native Codex interface
+- Three layout families: cinematic banner, immersive board, and command center
+- Four environmental effects: sparks, orbital scan, aurora, and petals
+- Upload PNG, JPEG, or WebP in the page, then compress, extract colors, and save locally
+- A watchdog restores the theme after normal Codex restarts with retry circuit breaking
 - Automatic backup and restoration of the original Codex base colors
 - Validation of the Codex package, Node.js signature, and copied-file hashes
 - No global Node.js installation required
@@ -62,6 +79,8 @@ It never modifies the official MSIX package or `app.asar`. The theme is injected
 2. Download this repository and extract it completely to a regular folder.
 3. Double-click `Codex SkinKit.cmd` and choose **Install / Update**.
 4. Allow the prompted Codex restart.
+
+After activation, a theme entry appears in the upper-right corner of Codex. In-page changes apply immediately and persist without restarting Codex.
 
 The installer creates only one Desktop entry, `Codex SkinKit.cmd`. Open it to access the control center:
 
@@ -86,11 +105,13 @@ The installer creates only one Desktop entry, `Codex SkinKit.cmd`. Open it to ac
 
 Aurora Veil and Ember Bloom are adapted from the MIT-licensed original demo themes in [Finderchangchang/codex-autoskin](https://github.com/Finderchangchang/codex-autoskin) and converted to the SkinKit theme schema.
 
-Open `Codex SkinKit.cmd`, choose **Switch Theme**, select a theme, and choose **Apply**. Codex restarts when needed.
+Use the theme entry in the upper-right corner of Codex for instant switching. **Switch Theme** in the Desktop control center remains available as a compatibility entry.
 
 ## Customize a theme
 
-Open the control center, choose **Customize Theme**, and select a PNG, JPG, or JPEG image up to 16 MB.
+In the in-page theme center, choose **Upload Image**. PNG, JPEG, and WebP files up to 50 MB are resized within 1600×1000, compressed below 5 MB, and used to extract a local palette. Up to 12 uploaded themes can be stored.
+
+Images and theme records stay in local IndexedDB and are not sent over the network. **Customize Theme** in the external control center remains available for the legacy PNG/JPEG workflow up to 16 MB.
 
 For best results, use a wide image at least 2000 px across and keep important subjects away from the left edge, where interface content may cover them.
 
@@ -119,6 +140,25 @@ or:
 powershell -NoProfile -ExecutionPolicy Bypass -File .\tests\run-tests-windows.ps1
 ```
 
+Live verification:
+
+```powershell
+# Current UI, theme center, and System Default
+powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\verify-dream-skin-windows.ps1
+
+# Every layout and animated effect
+powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\verify-dream-skin-windows.ps1 -TestAllEffects
+
+# Upload, compression, palette extraction, save, apply, delete, and restore
+powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\verify-dream-skin-windows.ps1 -TestThemeStudio
+
+# Reduced-motion behavior
+powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\verify-dream-skin-windows.ps1 -TestReducedMotion
+
+# System Default cleanup and original-theme restoration
+powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\verify-dream-skin-windows.ps1 -TestSystemDefault
+```
+
 ## Restore Codex
 
 Open the control center and choose **Restore Codex**. It removes the live theme, restores the saved Codex base colors, closes the local debugging session, and starts Codex normally.
@@ -130,6 +170,8 @@ Open the control center and choose **Restore Codex**. It removes the live theme,
 - Chrome DevTools Protocol listens on `127.0.0.1` only.
 - The injector accepts only native Codex `app://` pages.
 - The bundled Node.js signature and copied-file hashes are verified.
+- Uploaded images use only local Canvas, Blob, and IndexedDB processing.
+- The watchdog verifies process path, command line, and creation time, then pauses recovery after repeated failures.
 
 While the theme is active, CDP is an unauthenticated debugging interface available to local software. Do not run untrusted local programs at the same time. Use Restore to close the debugging session when the theme is not needed.
 
@@ -162,6 +204,8 @@ Issues and pull requests are welcome. Please include your Windows version, Codex
 ## Acknowledgements
 
 Thanks to [Finderchangchang/codex-autoskin](https://github.com/Finderchangchang/codex-autoskin) and its author, Vikicc, for the procedurally generated original theme artwork and the detailed theme design approach. The `Aurora Veil` and `Ember Bloom` themes in this project were adapted to the Codex SkinKit format under its MIT license.
+
+The in-app theme center, local upload workflow, layout system, environmental effects, and related live verification logic are adapted from the MIT-licensed [Codex ThemeScape Studio](https://github.com/2698686982-debug/Codex-Theme-Scape-Studio).
 
 ## Disclaimer and license
 

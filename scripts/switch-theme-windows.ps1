@@ -1,6 +1,8 @@
-param([string]$Theme)
+param([string]$Theme, [int]$Port)
 . (Join-Path $PSScriptRoot 'common-windows.ps1')
 Discover-Codex; Require-WindowsRuntime; Ensure-StateRoot
+$state = Read-State
+if (-not $PSBoundParameters.ContainsKey('Port')) { $Port = if ($state -and $state.port) { [int]$state.port } else { 9341 } }
 
 $profiles = @(Get-ChildItem -LiteralPath $ProfilesRoot -Directory -ErrorAction SilentlyContinue | Where-Object {
   Test-Path -LiteralPath (Join-Path $_.FullName 'theme.json')
@@ -41,5 +43,7 @@ Remove-Item -LiteralPath (Join-Path $temporary 'SOURCE.md') -Force -ErrorAction 
 if ($LASTEXITCODE -ne 0) { Remove-Item -LiteralPath $temporary -Recurse -Force; Fail "Theme profile validation failed: $($selected.Name)" }
 Remove-Item -LiteralPath $ThemeDir -Recurse -Force -ErrorAction SilentlyContinue
 Move-Item -LiteralPath $temporary -Destination $ThemeDir
-& (Join-Path $ScriptDir 'start-dream-skin-windows.ps1') -Port 9341 -PromptRestart
+& (Join-Path $ScriptDir 'start-dream-skin-windows.ps1') -Port $Port -PromptRestart
+& $Node $Injector --select-theme $selected.Id --port $Port --timeout-ms 30000 | Out-Null
+if ($LASTEXITCODE -ne 0) { Fail "Theme was installed but could not be selected in the live Codex renderer: $($selected.Name)" }
 Write-Host "Applied theme: $($selected.Name)"

@@ -1,6 +1,9 @@
 {
   "schemaVersion": 1,
   "id": "aurora-veil",
+  "order": 40,
+  "layout": "cinematic-banner",
+  "effect": "aurora-ribbons",
   "name": "Aurora Veil",
   "brandSubtitle": "AURORA NIGHT OPERATIONS",
   "tagline": "在极光夜空下，把灵感写进每一行代码。",

@@ -14,10 +14,16 @@ $Injector = Join-Path $ScriptDir 'injector.mjs'
 $InjectorLog = Join-Path $StateRoot 'injector.log'
 $InjectorErrorLog = Join-Path $StateRoot 'injector-error.log'
 $StartErrorLog = Join-Path $StateRoot 'start-error.log'
+$WatchdogLog = Join-Path $StateRoot 'watchdog.log'
+$WatchdogErrorLog = Join-Path $StateRoot 'watchdog-error.log'
+$WatchdogPidPath = Join-Path $StateRoot 'watchdog.pid'
+$WatchdogEnabledPath = Join-Path $StateRoot 'watchdog.enabled'
+$WatchdogScript = Join-Path $ScriptDir 'watchdog-windows.ps1'
+$WatchdogStartupPath = Join-Path ([Environment]::GetFolderPath('Startup')) 'Codex SkinKit Watchdog.vbs'
 $RuntimeRoot = Join-Path $InstallRoot 'runtime'
 $RuntimeNode = Join-Path $RuntimeRoot 'node.exe'
-$SkinVersion = '1.0.0'
-$WindowsBuild = '2026.07.16.1'
+$SkinVersion = '1.1.0'
+$WindowsBuild = '2026.07.17.1'
 
 function Fail([string]$Message) {
   New-Item -ItemType Directory -Path $StateRoot -Force | Out-Null
@@ -150,10 +156,57 @@ function Stop-RecordedInjector {
   if (-not $state) { return }
   $process = Get-CimInstance Win32_Process -Filter "ProcessId=$($state.injectorPid)" -ErrorAction SilentlyContinue
   if (-not $process) { return }
-  if ($process.ExecutablePath -ne $state.nodePath -or $process.CommandLine -notlike "*$($state.injectorPath)*--watch*") {
+  $hasCreationTime = $state.PSObject.Properties.Name -contains 'injectorCreatedAt'
+  $creationMismatch = $hasCreationTime -and $process.CreationDate.ToString('o') -ne $state.injectorCreatedAt
+  if ($process.ExecutablePath -ne $state.nodePath -or $process.CommandLine -notlike "*$($state.injectorPath)*--watch*" -or $creationMismatch) {
     Remove-Item -LiteralPath $StatePath -Force -ErrorAction SilentlyContinue
     Write-Warning "Saved injector PID $($state.injectorPid) was reused by another process. The stale SkinKit state was cleared without stopping that process."
     return
   }
   Stop-Process -Id $state.injectorPid
+}
+
+function Test-CodexRendererTarget([int]$Port) {
+  if (-not (Test-CodexEndpoint $Port)) { return $false }
+  try {
+    $request = [Net.HttpWebRequest]::Create("http://127.0.0.1:$Port/json/list")
+    $request.Proxy = $null
+    $request.Timeout = 2000
+    $response = $request.GetResponse()
+    try {
+      $reader = [IO.StreamReader]::new($response.GetResponseStream())
+      try { $targets = @($reader.ReadToEnd() | ConvertFrom-Json) } finally { $reader.Dispose() }
+    } finally { $response.Dispose() }
+    return @($targets | Where-Object {
+      $_.type -eq 'page' -and $_.url -like 'app://*' -and $_.webSocketDebuggerUrl
+    }).Count -gt 0
+  } catch { return $false }
+}
+
+function Get-WatchdogProcess {
+  if (-not (Test-Path -LiteralPath $WatchdogPidPath)) { return $null }
+  $watchdogPid = [int](Get-Content -LiteralPath $WatchdogPidPath -Raw)
+  $process = Get-CimInstance Win32_Process -Filter "ProcessId=$watchdogPid" -ErrorAction SilentlyContinue
+  if (-not $process -or $process.Name -notin @('powershell.exe', 'pwsh.exe') -or
+      $process.CommandLine -notlike "*$WatchdogScript*") {
+    Remove-Item -LiteralPath $WatchdogPidPath -Force -ErrorAction SilentlyContinue
+    return $null
+  }
+  $process
+}
+
+function Enable-SkinKitWatchdog {
+  Ensure-StateRoot
+  [IO.File]::WriteAllText($WatchdogEnabledPath, "enabled`n", [Text.UTF8Encoding]::new($false))
+  if (Get-WatchdogProcess) { return }
+  Start-Process -FilePath 'powershell.exe' -ArgumentList @(
+    '-NoProfile', '-ExecutionPolicy', 'Bypass', '-File', $WatchdogScript
+  ) -WindowStyle Hidden | Out-Null
+}
+
+function Disable-SkinKitWatchdog {
+  Remove-Item -LiteralPath $WatchdogEnabledPath -Force -ErrorAction SilentlyContinue
+  $process = Get-WatchdogProcess
+  if ($process) { Stop-Process -Id $process.ProcessId -Force -ErrorAction SilentlyContinue }
+  Remove-Item -LiteralPath $WatchdogPidPath -Force -ErrorAction SilentlyContinue
 }

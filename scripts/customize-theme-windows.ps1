@@ -1,6 +1,8 @@
 param([string]$Image, [string]$Name, [string]$Tagline='Turn your favorite image into an interactive Codex workspace.', [string]$Quote='MAKE SOMETHING WONDERFUL', [string]$Accent='#7cff46', [string]$Secondary='#36d7e8', [string]$Highlight='#642a8c', [switch]$NoApply, [switch]$ResetDemo)
 . (Join-Path $PSScriptRoot 'common-windows.ps1')
 Discover-Codex; Require-WindowsRuntime; Ensure-StateRoot
+$state = Read-State
+$activePort = if ($state -and $state.port) { [int]$state.port } else { 9341 }
 if ($ResetDemo) { & $Node (Join-Path $ScriptDir 'write-theme.mjs') reset-demo --output-dir $ThemeDir }
 else {
   if (-not $Image) {
@@ -19,4 +21,4 @@ else {
   Get-ChildItem -LiteralPath $ThemeDir -File -Filter 'background-*' | Where-Object Name -ne $imageName | Remove-Item -Force
 }
 if ($LASTEXITCODE -ne 0) { Fail 'Theme customization failed.' }
-if (-not $NoApply) { & (Join-Path $ScriptDir 'start-dream-skin-windows.ps1') -Port 9341 -PromptRestart }
+if (-not $NoApply) { & (Join-Path $ScriptDir 'start-dream-skin-windows.ps1') -Port $activePort -PromptRestart }

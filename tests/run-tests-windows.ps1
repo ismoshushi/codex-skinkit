@@ -6,15 +6,29 @@ if (@(Get-CodexMainProcesses).Count -lt 0) { throw 'Process discovery did not re
 $entryPoints = @(Get-ChildItem -LiteralPath $root -File -Filter '*.cmd')
 if ($entryPoints.Count -ne 1 -or $entryPoints[0].Name -ne 'Codex SkinKit.cmd') { throw 'The repository must expose one Codex SkinKit CMD entry point.' }
 if (-not (Test-Path -LiteralPath (Join-Path $root 'scripts\control-center-windows.ps1'))) { throw 'The control center script is missing.' }
+$switchScript = Get-Content -LiteralPath (Join-Path $root 'scripts\switch-theme-windows.ps1') -Raw -Encoding UTF8
+if ($switchScript -like '*--port 9341*' -or $switchScript -like '*-Port 9341*') { throw 'Theme switching must use the active state port instead of a hard-coded port.' }
 Get-ChildItem (Join-Path $root 'scripts') -Filter '*.ps1' | ForEach-Object { [void][scriptblock]::Create((Get-Content $_.FullName -Raw)) }
 Get-ChildItem (Join-Path $root 'scripts'),(Join-Path $root 'assets') -Include '*.mjs','*.js' -Recurse | Where-Object { $_.Name -notlike '._*' } | ForEach-Object { & $Node --check $_.FullName | Out-Null; if ($LASTEXITCODE -ne 0) { throw "JavaScript syntax failed: $($_.FullName)" } }
-& $Node (Join-Path $root 'scripts\injector.mjs') --check-payload | Out-Null
+$renderer = Get-Content -LiteralPath (Join-Path $root 'assets\renderer-inject.js') -Raw -Encoding UTF8
+$style = Get-Content -LiteralPath (Join-Path $root 'assets\dream-skin.css') -Raw -Encoding UTF8
+foreach ($marker in @('SYSTEM_DEFAULT_ID', 'indexedDB.open', 'prepareUploadedImage', 'saveUploadedThemeRecord', 'dream-skin-theme-trigger')) {
+  if ($renderer -notlike "*$marker*") { throw "In-app theme studio marker is missing: $marker" }
+}
+if ($style -notlike '*prefers-reduced-motion*') { throw 'Reduced-motion CSS handling is missing.' }
+$basePayload = & $Node (Join-Path $root 'scripts\injector.mjs') --check-payload | ConvertFrom-Json
+if (-not $basePayload.pass -or $basePayload.builtinThemeCount -ne 5) { throw 'Built-in theme registry payload validation failed.' }
+$layouts = [Collections.Generic.HashSet[string]]::new()
+$effects = [Collections.Generic.HashSet[string]]::new()
 foreach ($profile in Get-ChildItem (Join-Path $root 'profiles') -Directory) {
   $profileConfig = Get-Content -LiteralPath (Join-Path $profile.FullName 'theme.json') -Raw -Encoding UTF8 | ConvertFrom-Json
-  if ($profileConfig.schemaVersion -ne 1 -or -not $profileConfig.name) { throw "Theme profile metadata failed UTF-8 parsing: $($profile.Name)" }
+  if ($profileConfig.schemaVersion -ne 1 -or -not $profileConfig.name -or -not $profileConfig.layout -or -not $profileConfig.effect) { throw "Theme profile metadata failed UTF-8 parsing or capability validation: $($profile.Name)" }
+  [void]$layouts.Add([string]$profileConfig.layout)
+  [void]$effects.Add([string]$profileConfig.effect)
   & $Node (Join-Path $root 'scripts\injector.mjs') --check-payload --theme-dir $profile.FullName | Out-Null
   if ($LASTEXITCODE -ne 0) { throw "Theme profile failed validation: $($profile.Name)" }
 }
+if ($layouts.Count -ne 3 -or $effects.Count -ne 4) { throw 'SkinKit must expose exactly three layout families and four effect profiles.' }
 $tmp = Join-Path $env:TEMP "codex-skinkit-tests-$PID"; New-Item -ItemType Directory -Path (Join-Path $tmp 'theme') -Force | Out-Null
 try {
   Copy-Item (Join-Path $root 'assets\open-portal.png') (Join-Path $tmp 'theme\background.png')
@@ -27,4 +41,4 @@ try {
   & $Node (Join-Path $root 'scripts\theme-config.mjs') restore $config $backup | Out-Null
   if ($LASTEXITCODE -ne 0 -or [IO.File]::ReadAllText($config) -ne $original) { throw 'Repeated restore must be a no-op.' }
 } finally { Remove-Item -LiteralPath $tmp -Recurse -Force -ErrorAction SilentlyContinue }
-Write-Host 'PASS: PowerShell syntax, JavaScript syntax, signed runtime, payload, custom theme, and config round-trip.'
+Write-Host 'PASS: syntax, signed runtime, five-theme registry, three layouts, four effects, in-app studio, custom theme, and config round-trip.'
