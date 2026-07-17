@@ -155,8 +155,6 @@ If Codex SkinKit saves you time, you can support ongoing maintenance through the
 | --- | --- |
 | <img src="./assets/readme/wechat-contact.png" alt="WeChat contact QR code" width="220" /> | <img src="./assets/readme/wechat-reward.jpg" alt="WeChat reward QR code" width="220" /> |
 
-> These contact and support methods are shared with the [Learn Codex](https://github.com/ismoshushi/learn-codex) project.
-
 ## Contributing
 
 Issues and pull requests are welcome. Please include your Windows version, Codex version, reproduction steps, and verification results. Screenshots are especially useful for interface problems.

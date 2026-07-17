@@ -155,8 +155,6 @@ powershell -NoProfile -ExecutionPolicy Bypass -File .\tests\run-tests-windows.ps
 | --- | --- |
 | <img src="./assets/readme/wechat-contact.png" alt="微信联系二维码" width="220" /> | <img src="./assets/readme/wechat-reward.jpg" alt="微信赞赏码" width="220" /> |
 
-> 以上联系方式和赞赏方式与 [Learn Codex](https://github.com/ismoshushi/learn-codex) 项目一致。
-
 ## 参与贡献
 
 欢迎提交 Issue 或 Pull Request。请尽量说明 Windows 版本、Codex 版本、复现步骤和验证结果；涉及界面问题时，附上截图会更容易定位。
